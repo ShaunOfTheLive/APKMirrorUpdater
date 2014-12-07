@@ -17,6 +17,19 @@ import java.util.List;
 public class MainActivity extends ActionBarActivity {
     private static final String TAG = "MY_TAG";
 
+    /**
+     * Return whether the given PackgeInfo represents a system package or not.
+     * User-installed packages (Market or otherwise) should not be denoted as
+     * system packages.
+     *
+     * @param packageInfo
+     * @return
+     */
+    private boolean isSystemPackage(PackageInfo packageInfo) {
+        return ((packageInfo.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0) ? true
+                : false;
+    }
+
     private ArrayList<AppInfo> getAllAppInfo() {
         final PackageManager pm = getPackageManager();
         List<PackageInfo> packages = pm.getInstalledPackages(0);
@@ -31,7 +44,9 @@ public class MainActivity extends ActionBarActivity {
             }
             final String applicationName = (String) (ai != null ? pm.getApplicationLabel(ai) : "(unknown)");
 
-            apps.add(new AppInfo(packageInfo.packageName, applicationName, packageInfo.versionName));
+            if (!isSystemPackage(packageInfo)) {
+                apps.add(new AppInfo(packageInfo.packageName, applicationName, packageInfo.versionName));
+            }
         }
 
         return apps;
