@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -47,6 +48,8 @@ public class MainActivity extends ActionBarActivity {
             if (!isSystemPackage(packageInfo)) {
                 apps.add(new AppInfo(packageInfo.packageName, applicationName, packageInfo.versionName));
             }
+
+            Collections.sort(apps, AppInfo.nameComparator);
         }
 
         return apps;
