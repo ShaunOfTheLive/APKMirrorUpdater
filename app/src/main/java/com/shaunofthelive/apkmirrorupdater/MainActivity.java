@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -50,10 +49,16 @@ public class MainActivity extends ActionBarActivity {
             Log.d(TAG, "Version: " + appInfo.getVersion());
         }
 
-        final ArrayAdapter adapter = new ArrayAdapter(this,
+/*        final ArrayAdapter adapter = new ArrayAdapter(this,
                 android.R.layout.simple_list_item_1, apps);
 
         final ListView listView = (ListView) findViewById(R.id.listView);
+        listView.setAdapter(adapter);*/
+
+        // Create the adapter to convert the array to views
+        AppInfoAdapter adapter = new AppInfoAdapter(this, apps);
+// Attach the adapter to a ListView
+        ListView listView = (ListView) findViewById(R.id.lvApps);
         listView.setAdapter(adapter);
     }
 
