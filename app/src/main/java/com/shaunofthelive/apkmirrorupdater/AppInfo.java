@@ -33,7 +33,7 @@ public class AppInfo {
         nameComparator = new Comparator<AppInfo>() {
             @Override
             public int compare(AppInfo lhs, AppInfo rhs) {
-                return lhs.applicationName.compareTo(rhs.applicationName);
+                return lhs.applicationName.compareToIgnoreCase(rhs.applicationName);
             }
         };
     }
