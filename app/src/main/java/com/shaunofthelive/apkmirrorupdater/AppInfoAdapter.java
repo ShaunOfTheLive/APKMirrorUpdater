@@ -30,7 +30,7 @@ public class AppInfoAdapter extends ArrayAdapter<AppInfo> {
         TextView appVersion = (TextView) convertView.findViewById(R.id.appVersion);
         // Populate the data into the template view using the data object
         appName.setText(appInfo.getApplicationName());
-        appVersion.setText(appInfo.getVersion());
+        appVersion.setText(appInfo.getVersionName());
         // Return the completed view to render on screen
         return convertView;
     }

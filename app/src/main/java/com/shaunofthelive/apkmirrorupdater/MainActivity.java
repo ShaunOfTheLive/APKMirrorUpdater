@@ -69,7 +69,7 @@ public class MainActivity extends ActionBarActivity {
         for (AppInfo appInfo: apps) {
             // log the info
             Log.d(TAG, "Application name: " + appInfo.getApplicationName());
-            Log.d(TAG, "Version: " + appInfo.getVersion());
+            Log.d(TAG, "Version: " + appInfo.getVersionName());
         }
 
 /*        final ArrayAdapter adapter = new ArrayAdapter(this,

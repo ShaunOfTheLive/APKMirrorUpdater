@@ -8,7 +8,8 @@ import java.util.Comparator;
 public class AppInfo {
     private String packageName;
     private String applicationName;
-    private String version;
+    private String versionName;
+    private String versionCode;
 
     public String getPackageName() {
         return packageName;
@@ -18,17 +19,26 @@ public class AppInfo {
         return applicationName;
     }
 
-    public String getVersion() {
-        return version;
+    public String getVersionName() {
+        return versionName;
+    }
+
+    public String getVersionCode() {
+        return versionCode;
     }
 
     public static Comparator<AppInfo> nameComparator;
 
-    public AppInfo(String packageName, String applicationName, String version) {
+    public AppInfo(String packageName, String applicationName, String versionName) {
+        this(packageName, applicationName, versionName, null);
+    }
+
+    public AppInfo(String packageName, String applicationName, String versionName, String versionCode) {
 
         this.packageName = packageName;
         this.applicationName = applicationName;
-        this.version = version;
+        this.versionName = versionName;
+        this.versionCode = versionCode;
 
         nameComparator = new Comparator<AppInfo>() {
             @Override
@@ -41,6 +51,6 @@ public class AppInfo {
     public String toString() {
         return packageName + System.getProperty("line.separator")
              + applicationName + System.getProperty("line.separator")
-             + version;
+             + versionName;
     }
 }
