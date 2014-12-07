@@ -19,7 +19,7 @@ public class MainActivity extends ActionBarActivity {
     private static final String TAG = "MY_TAG";
 
     /**
-     * Return whether the given PackgeInfo represents a system package or not.
+     * Return whether the given PackageInfo represents a system package or not.
      * User-installed packages (Market or otherwise) should not be denoted as
      * system packages.
      *
