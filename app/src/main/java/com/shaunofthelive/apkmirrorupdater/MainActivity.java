@@ -31,6 +31,11 @@ public class MainActivity extends ActionBarActivity {
                 : false;
     }
 
+    private boolean isSystemPackageNotUpdated(PackageInfo packageInfo) {
+        return (((packageInfo.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0)
+             && (packageInfo.applicationInfo.flags & ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) == 0);
+    }
+
     private ArrayList<AppInfo> getAllAppInfo() {
         final PackageManager pm = getPackageManager();
         List<PackageInfo> packages = pm.getInstalledPackages(0);
@@ -45,7 +50,7 @@ public class MainActivity extends ActionBarActivity {
             }
             final String applicationName = (String) (ai != null ? pm.getApplicationLabel(ai) : "(unknown)");
 
-            if (!isSystemPackage(packageInfo)) {
+            if (!isSystemPackageNotUpdated(packageInfo)) {
                 apps.add(new AppInfo(packageInfo.packageName, applicationName, packageInfo.versionName));
             }
 
