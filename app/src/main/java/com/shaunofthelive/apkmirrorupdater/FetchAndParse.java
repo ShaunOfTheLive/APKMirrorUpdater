@@ -32,6 +32,18 @@ public class FetchAndParse extends AsyncTask<String, Void, String> {
             for (String appName : appNames) {
                 Log.d(TAG, appName);
             }
+
+            Elements versionElements = doc.select(".infoSlide:not(.widget_appmanager_recentpostswidget *)");
+            ArrayList<String> versionStrings = new ArrayList<String>();
+
+            for (Element el : versionElements) {
+                //Log.d(TAG, "el: " + el);
+                versionStrings.add(el.text());
+            }
+            for (String versionString : versionStrings) {
+                Log.d(TAG, versionString);
+            }
+
         } catch(IOException ie) {
             Log.d(TAG, "EXCEPTION: IOException");
         }
