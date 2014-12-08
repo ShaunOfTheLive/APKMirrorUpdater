@@ -11,6 +11,8 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by Shaun on 2014-12-08.
@@ -42,6 +44,30 @@ public class FetchAndParse extends AsyncTask<String, Void, String> {
             }
             for (String versionString : versionStrings) {
                 Log.d(TAG, versionString);
+            }
+
+            Pattern versionPattern = Pattern.compile(".*Latest version: (.*) \\((.*)\\) for Android (.*\\+) \\(.*API ([0-9]+)\\).*");
+            String versionName;
+            int versionCode;
+            int minimumApi;
+
+            for (String versionString : versionStrings) {
+                Matcher m = versionPattern.matcher(versionString); // put element here
+
+                if (m.matches()) {
+                    versionName = m.group(1);
+                    versionCode = Integer.parseInt(m.group(2));
+                    // no group 3; ignore minimum Android version e.g. 4.0.3+
+                    minimumApi = Integer.parseInt(m.group(4));
+                } else {
+                    versionName = "ERROR";
+                    versionCode = 0;
+                    minimumApi = 0;
+                }
+                Log.d(TAG, "versionName: " + versionName);
+                Log.d(TAG, "versionCode: " + versionCode);
+                Log.d(TAG, "minimumApi: " + minimumApi);
+
             }
 
         } catch(IOException ie) {
