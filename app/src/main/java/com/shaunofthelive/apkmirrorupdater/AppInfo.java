@@ -10,6 +10,7 @@ public class AppInfo {
     private String applicationName;
     private String versionName;
     private int versionCode;
+    private int minimumApi;
 
     public String getPackageName() {
         return packageName;
@@ -47,6 +48,7 @@ public class AppInfo {
         this.applicationName = applicationName;
         this.versionName = versionName;
         this.versionCode = versionCode;
+        this.minimumApi = minimumApi;
 
         nameComparator = new Comparator<AppInfo>() {
             @Override
@@ -59,6 +61,8 @@ public class AppInfo {
     public String toString() {
         return packageName + System.getProperty("line.separator")
              + applicationName + System.getProperty("line.separator")
-             + versionName;
+             + versionName + System.getProperty("line.separator")
+             + versionCode + System.getProperty("line.separator")
+             + minimumApi;
     }
 }
