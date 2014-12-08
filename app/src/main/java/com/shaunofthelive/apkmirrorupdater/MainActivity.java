@@ -10,6 +10,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -36,6 +42,8 @@ public class MainActivity extends ActionBarActivity {
              && (packageInfo.applicationInfo.flags & ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) == 0);
     }
 
+
+
     private ArrayList<AppInfo> getAllAppInfo() {
         final PackageManager pm = getPackageManager();
         List<PackageInfo> packages = pm.getInstalledPackages(0);
@@ -51,7 +59,8 @@ public class MainActivity extends ActionBarActivity {
             final String applicationName = (String) (ai != null ? pm.getApplicationLabel(ai) : "(unknown)");
 
             if (!isSystemPackageNotUpdated(packageInfo)) {
-                apps.add(new AppInfo(packageInfo.packageName, applicationName, packageInfo.versionName));
+                apps.add(new AppInfo(packageInfo.packageName, applicationName,
+                                     packageInfo.versionName, packageInfo.versionCode));
             }
 
             Collections.sort(apps, AppInfo.nameComparator);
@@ -71,6 +80,8 @@ public class MainActivity extends ActionBarActivity {
             Log.d(TAG, "Application name: " + appInfo.getApplicationName());
             Log.d(TAG, "Version: " + appInfo.getVersionName());
         }
+
+        new FetchAndParse().execute("test");
 
 /*        final ArrayAdapter adapter = new ArrayAdapter(this,
                 android.R.layout.simple_list_item_1, apps);

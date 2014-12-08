@@ -9,7 +9,7 @@ public class AppInfo {
     private String packageName;
     private String applicationName;
     private String versionName;
-    private String versionCode;
+    private int versionCode;
 
     public String getPackageName() {
         return packageName;
@@ -23,17 +23,25 @@ public class AppInfo {
         return versionName;
     }
 
-    public String getVersionCode() {
+    public int getVersionCode() {
         return versionCode;
     }
 
     public static Comparator<AppInfo> nameComparator;
 
     public AppInfo(String packageName, String applicationName, String versionName) {
-        this(packageName, applicationName, versionName, null);
+        this(packageName, applicationName, versionName, 0, 0);
     }
 
-    public AppInfo(String packageName, String applicationName, String versionName, String versionCode) {
+    public AppInfo(String packageName, String applicationName, String versionName, int versionCode) {
+        this(packageName, applicationName, versionName, versionCode, 0);
+    }
+
+    public AppInfo(String packageName,
+                   String applicationName,
+                   String versionName,
+                      int versionCode,
+                      int minimumApi) {
 
         this.packageName = packageName;
         this.applicationName = applicationName;
