@@ -30,10 +30,6 @@ public class FetchAndParse extends AsyncTask<String, Void, String> {
             for (Element el : appNameElements) {
                 appNames.add(el.text());
             }
-            Collections.sort(appNames);
-            for (String appName : appNames) {
-                Log.d(TAG, appName);
-            }
 
             Elements versionElements = doc.select(".infoSlide:not(.widget_appmanager_recentpostswidget *)");
             ArrayList<String> versionStrings = new ArrayList<String>();
@@ -42,15 +38,15 @@ public class FetchAndParse extends AsyncTask<String, Void, String> {
                 //Log.d(TAG, "el: " + el);
                 versionStrings.add(el.text());
             }
-            for (String versionString : versionStrings) {
-                Log.d(TAG, versionString);
-            }
 
             Pattern versionPattern = Pattern.compile(".*Latest version: (.*) \\((.*)\\) for Android (.*\\+) \\(.*API ([0-9]+)\\).*");
             String versionName;
             int versionCode;
             int minimumApi;
 
+            ArrayList<AppInfo> appInfos = new ArrayList<AppInfo>();
+
+            int i = 0;
             for (String versionString : versionStrings) {
                 Matcher m = versionPattern.matcher(versionString); // put element here
 
@@ -64,10 +60,13 @@ public class FetchAndParse extends AsyncTask<String, Void, String> {
                     versionCode = 0;
                     minimumApi = 0;
                 }
-                Log.d(TAG, "versionName: " + versionName);
-                Log.d(TAG, "versionCode: " + versionCode);
-                Log.d(TAG, "minimumApi: " + minimumApi);
 
+                appInfos.add(new AppInfo("", appNames.get(i), versionName, versionCode, minimumApi));
+                i++;
+            }
+
+            for (AppInfo appInfo : appInfos) {
+                Log.d(TAG, appInfo.toString());
             }
 
         } catch(IOException ie) {
