@@ -17,10 +17,13 @@ import java.util.regex.Pattern;
 /**
  * Created by Shaun on 2014-12-08.
  */
-public class FetchAndParse extends AsyncTask<String, Void, String> {
+public class FetchAndParse extends AsyncTask<String, Integer, ArrayList<AppInfo>> {
     private static final String TAG = "MY_TAG";
 
-    protected String doInBackground(String... urls) {
+    @Override
+    protected ArrayList<AppInfo> doInBackground(String... s) {
+        ArrayList<AppInfo> appList = new ArrayList<AppInfo>();
+
         try {
             Document doc = Jsoup.connect("http://www.apkmirror.com/").get();
 
@@ -44,8 +47,6 @@ public class FetchAndParse extends AsyncTask<String, Void, String> {
             int versionCode;
             int minimumApi;
 
-            ArrayList<AppInfo> appInfos = new ArrayList<AppInfo>();
-
             int i = 0;
             for (String versionString : versionStrings) {
                 Matcher m = versionPattern.matcher(versionString); // put element here
@@ -61,30 +62,31 @@ public class FetchAndParse extends AsyncTask<String, Void, String> {
                     minimumApi = 0;
                 }
 
-                appInfos.add(new AppInfo("", appNames.get(i), versionName, versionCode, minimumApi));
+                appList.add(new AppInfo("", appNames.get(i), versionName, versionCode, minimumApi));
                 i++;
-            }
-
-            for (AppInfo appInfo : appInfos) {
-                Log.d(TAG, appInfo.toString());
             }
 
         } catch(IOException ie) {
             Log.d(TAG, "EXCEPTION: IOException");
         }
 
-        return "test";
+        return appList;
     }
 
+    @Override
     protected void onProgressUpdate(Integer... progress) {
         //
     }
 
+    @Override
     protected void onPreExecute() {
-        Log.d(TAG, "preExecute");
+        Log.d("DEBUG", "preExecute");
     }
 
-    protected void onPostExecute(String result) {
-        Log.d(TAG, "postExecute");
+    @Override
+    protected void onPostExecute(ArrayList<AppInfo> appList) {
+        for (AppInfo appInfo : appList) {
+            Log.d("SITE", appInfo.toString());
+        }
     }
 }
