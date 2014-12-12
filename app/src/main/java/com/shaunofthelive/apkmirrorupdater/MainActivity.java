@@ -76,11 +76,11 @@ public class MainActivity extends ActionBarActivity {
         ArrayList<AppInfo> apps = getAllAppInfo();
         for (AppInfo appInfo: apps) {
             // log the info
-            Log.d(TAG, "Application name: " + appInfo.getApplicationName());
-            Log.d(TAG, "Version: " + appInfo.getVersionName());
+            Log.d("INST", "Application name: " + appInfo.getApplicationName());
+            Log.d("INST", "Version: " + appInfo.getVersionName());
         }
 
-        new FetchAndParse().execute("test");
+        new FetchAndParse().execute();
 
 /*        final ArrayAdapter adapter = new ArrayAdapter(this,
                 android.R.layout.simple_list_item_1, apps);
