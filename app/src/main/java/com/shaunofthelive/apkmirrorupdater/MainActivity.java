@@ -59,8 +59,7 @@ public class MainActivity extends ActionBarActivity {
             final String applicationName = (String) (ai != null ? pm.getApplicationLabel(ai) : "(unknown)");
 
             if (!isSystemPackageNotUpdated(packageInfo)) {
-                apps.add(new AppInfo(packageInfo.packageName, applicationName,
-                                     packageInfo.versionName, packageInfo.versionCode));
+                apps.add(new AppInfo(packageInfo, applicationName));
             }
 
             Collections.sort(apps, AppInfo.nameComparator);

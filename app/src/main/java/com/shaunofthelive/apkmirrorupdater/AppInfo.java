@@ -1,19 +1,19 @@
 package com.shaunofthelive.apkmirrorupdater;
 
+import android.content.pm.PackageInfo;
+
 import java.util.Comparator;
 
 /**
  * Created by Shaun on 2014-12-07.
  */
 public class AppInfo {
-    private String packageName;
-    private String applicationName;
-    private String versionName;
-    private int versionCode;
-    private int minimumApi;
+    public PackageInfo packageInfo;
+    public String applicationName;
+    public int minimumApi;
 
     public String getPackageName() {
-        return packageName;
+        return packageInfo.packageName;
     }
 
     public String getApplicationName() {
@@ -21,14 +21,32 @@ public class AppInfo {
     }
 
     public String getVersionName() {
-        return versionName;
+        return packageInfo.versionName;
     }
 
     public int getVersionCode() {
-        return versionCode;
+        return packageInfo.versionCode;
     }
 
-    public static Comparator<AppInfo> nameComparator;
+    public static Comparator<AppInfo> nameComparator = new Comparator<AppInfo>() {
+        @Override
+        public int compare(AppInfo lhs, AppInfo rhs) {
+            return lhs.applicationName.compareToIgnoreCase(rhs.applicationName);
+        }
+    };
+
+    public AppInfo() {
+    }
+
+    public AppInfo(PackageInfo packageInfo, String applicationName) {
+        this(packageInfo, applicationName, 0);
+    }
+
+    public AppInfo(PackageInfo packageInfo, String applicationName, int minimumApi) {
+        this.packageInfo = packageInfo;
+        this.applicationName = applicationName;
+        this.minimumApi = minimumApi;
+    }
 
     public AppInfo(String packageName, String applicationName, String versionName) {
         this(packageName, applicationName, versionName, 0, 0);
@@ -43,26 +61,19 @@ public class AppInfo {
                    String versionName,
                       int versionCode,
                       int minimumApi) {
-
-        this.packageName = packageName;
+        packageInfo = new PackageInfo();
+        packageInfo.packageName = packageName;
         this.applicationName = applicationName;
-        this.versionName = versionName;
-        this.versionCode = versionCode;
+        packageInfo.versionName = versionName;
+        packageInfo.versionCode = versionCode;
         this.minimumApi = minimumApi;
-
-        nameComparator = new Comparator<AppInfo>() {
-            @Override
-            public int compare(AppInfo lhs, AppInfo rhs) {
-                return lhs.applicationName.compareToIgnoreCase(rhs.applicationName);
-            }
-        };
     }
 
     public String toString() {
-        return packageName + System.getProperty("line.separator")
+        return packageInfo.packageName + System.getProperty("line.separator")
              + applicationName + System.getProperty("line.separator")
-             + versionName + System.getProperty("line.separator")
-             + versionCode + System.getProperty("line.separator")
+             + packageInfo.versionName + System.getProperty("line.separator")
+             + packageInfo.versionCode + System.getProperty("line.separator")
              + minimumApi;
     }
 }
