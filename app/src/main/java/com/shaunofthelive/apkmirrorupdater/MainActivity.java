@@ -52,11 +52,11 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
 
         ArrayList<AppInfo> apps = getAllAppInfo();
-        for (AppInfo appInfo: apps) {
-            // log the info
-            Log.d("INST", "Application name: " + appInfo.getApplicationName());
-            Log.d("INST", "Version: " + appInfo.getVersionName());
-        }
+//        for (AppInfo appInfo: apps) {
+//            // log the info
+//            Log.d("INST", "Application name: " + appInfo.getApplicationName());
+//            Log.d("INST", "Version: " + appInfo.getVersionName());
+//        }
 
         new FetchAndParse().execute();
 
@@ -72,6 +72,11 @@ public class MainActivity extends ActionBarActivity {
 // Attach the adapter to a ListView
         ListView listView = (ListView) findViewById(R.id.lvApps);
         listView.setAdapter(adapter);
+        for (AppInfo appInfo: apps) {
+            // log the info
+            Log.d("INST", "Application name: " + appInfo.getApplicationName());
+            Log.d("INST", "Version: " + appInfo.getVersionName());
+        }
     }
 
 
