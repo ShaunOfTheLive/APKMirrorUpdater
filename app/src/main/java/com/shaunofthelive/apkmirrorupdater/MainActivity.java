@@ -24,26 +24,6 @@ import java.util.List;
 public class MainActivity extends ActionBarActivity {
     private static final String TAG = "MY_TAG";
 
-    /**
-     * Return whether the given PackageInfo represents a system package or not.
-     * User-installed packages (Market or otherwise) should not be denoted as
-     * system packages.
-     *
-     * @param packageInfo
-     * @return
-     */
-    private boolean isSystemPackage(PackageInfo packageInfo) {
-        return ((packageInfo.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0) ? true
-                : false;
-    }
-
-    private boolean isSystemPackageNotUpdated(PackageInfo packageInfo) {
-        return (((packageInfo.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0)
-             && (packageInfo.applicationInfo.flags & ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) == 0);
-    }
-
-
-
     private ArrayList<AppInfo> getAllAppInfo() {
         final PackageManager pm = getPackageManager();
         List<PackageInfo> packages = pm.getInstalledPackages(0);
@@ -58,9 +38,7 @@ public class MainActivity extends ActionBarActivity {
             }
             final String applicationName = (String) (ai != null ? pm.getApplicationLabel(ai) : "(unknown)");
 
-            if (!isSystemPackageNotUpdated(packageInfo)) {
-                apps.add(new AppInfo(packageInfo, applicationName));
-            }
+            apps.add(new AppInfo(packageInfo, applicationName));
 
             Collections.sort(apps, AppInfo.nameComparator);
         }
@@ -90,6 +68,13 @@ public class MainActivity extends ActionBarActivity {
 
         // Create the adapter to convert the array to views
         AppInfoAdapter adapter = new AppInfoAdapter(this, apps);
+        int i = 0;
+        for (AppInfo appInfo: apps) {
+            if (appInfo.isSystemPackageNotUpdated()) {
+                adapter.hide(i);
+            }
+            ++i;
+        }
 // Attach the adapter to a ListView
         ListView listView = (ListView) findViewById(R.id.lvApps);
         listView.setAdapter(adapter);

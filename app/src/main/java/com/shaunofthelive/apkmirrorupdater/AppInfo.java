@@ -1,5 +1,6 @@
 package com.shaunofthelive.apkmirrorupdater;
 
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 
 import java.util.Comparator;
@@ -75,5 +76,23 @@ public class AppInfo {
              + packageInfo.versionName + System.getProperty("line.separator")
              + packageInfo.versionCode + System.getProperty("line.separator")
              + minimumApi;
+    }
+
+    /**
+     * Return whether the given PackageInfo represents a system package or not.
+     * User-installed packages (Market or otherwise) should not be denoted as
+     * system packages.
+     *
+     * @param packageInfo
+     * @return
+     */
+    public boolean isSystemPackage() {
+        return ((packageInfo.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0) ? true
+                : false;
+    }
+
+    public boolean isSystemPackageNotUpdated() {
+        return (((packageInfo.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0)
+                && (packageInfo.applicationInfo.flags & ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) == 0);
     }
 }
