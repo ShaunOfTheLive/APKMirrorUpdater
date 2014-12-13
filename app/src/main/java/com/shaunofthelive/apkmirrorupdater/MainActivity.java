@@ -60,16 +60,12 @@ public class MainActivity extends ActionBarActivity {
 
         new FetchAndParse().execute();
 
-/*        final ArrayAdapter adapter = new ArrayAdapter(this,
-                android.R.layout.simple_list_item_1, apps);
-
-        final ListView listView = (ListView) findViewById(R.id.listView);
-        listView.setAdapter(adapter);*/
-
         // Create the adapter to convert the array to views
+        // Because we're filtering right away, the apps array will get copied internally in the adapter
         AppInfoAdapter adapter = new AppInfoAdapter(this, apps);
+        // Filter out system apps that haven't been updated
         adapter.getFilter().filter("noSystemNotUpdated");
-// Attach the adapter to a ListView
+        // Attach the adapter to a ListView
         ListView listView = (ListView) findViewById(R.id.lvApps);
         listView.setAdapter(adapter);
         for (AppInfo appInfo: apps) {
