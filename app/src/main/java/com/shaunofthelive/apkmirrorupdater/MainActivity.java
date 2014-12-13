@@ -68,13 +68,7 @@ public class MainActivity extends ActionBarActivity {
 
         // Create the adapter to convert the array to views
         AppInfoAdapter adapter = new AppInfoAdapter(this, apps);
-        int i = 0;
-        for (AppInfo appInfo: apps) {
-            if (appInfo.isSystemPackageNotUpdated()) {
-                adapter.hide(i);
-            }
-            ++i;
-        }
+        adapter.getFilter().filter("noSystemNotUpdated");
 // Attach the adapter to a ListView
         ListView listView = (ListView) findViewById(R.id.lvApps);
         listView.setAdapter(adapter);

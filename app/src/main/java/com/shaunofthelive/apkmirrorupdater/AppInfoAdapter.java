@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Filter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -15,64 +16,67 @@ import java.util.ArrayList;
  * Created by Shaun on 2014-12-07.
  */
 public class AppInfoAdapter extends ArrayAdapter<AppInfo> {
-    ArrayList<AppInfo> items = null;
-    boolean[] hidden = null;
+    private ArrayList<AppInfo> items = null;
+    private Filter filter;
+
+    private class AppFilter extends Filter {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            FilterResults results = new FilterResults();
+            // We implement here the filter logic
+            if (constraint == null || constraint.length() == 0) {
+                // No filter implemented we return all the list
+                results.values = items;
+                results.count = items.size();
+            }
+            else {
+                // We perform filtering operation
+                ArrayList<AppInfo> nAppList = new ArrayList<AppInfo>();
+
+                for (AppInfo appInfo : items) {
+                    if (constraint.toString().equals("noSystemNotUpdated")) {
+                        if (!appInfo.isSystemPackageNotUpdated()) {
+                            nAppList.add(appInfo);
+                        }
+                    }
+                }
+
+                results.values = nAppList;
+                results.count = nAppList.size();
+
+            }
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint,FilterResults results) {
+            // Now we have to inform the adapter about the new list filtered
+            if (results.count == 0)
+                notifyDataSetInvalidated();
+            else {
+                items.clear();
+                items.addAll((ArrayList<AppInfo>) results.values);
+                notifyDataSetChanged();
+            }
+        }
+
+    }
+
+    @Override
+    public Filter getFilter() {
+        if (filter == null)
+            filter = new AppFilter();
+        return filter;
+    }
 
     public AppInfoAdapter(Context context, ArrayList<AppInfo> apps) {
         super(context, 0, apps);
 
         items = apps;
-        hidden = new boolean[apps.size()];
-        for (int i = 0; i < apps.size(); i++) {
-            hidden[i] = false;
-        }
     }
 
     @Override
-    public int getCount() {
-        return (items.size() - getHiddenCount());
-    }
-    private int getHiddenCount() {
-        int count = 0;
-        for(int i=0;i<items.size();i++)
-            if(hidden[i])
-                count++;
-        return count;
-    }
-
-    private int getRealPosition(int position) {
-        int hElements = getHiddenCountUpTo(position);
-        Log.d("grp", "hElements = " + String.valueOf(hElements));
-        int diff = 0;
-        for(int i=0;i<hElements;i++) {
-            diff++;
-            Log.d("grp", "diff = " + String.valueOf(diff));
-            if(hidden[position+diff])
-                i--;
-        }
-        return (position + diff);
-    }
-    private int getHiddenCountUpTo(int location) {
-        int count = 0;
-        for(int i=0;i<=location;i++) {
-            if(hidden[i])
-                count++;
-        }
-        return count;
-    }
-
-    public void hide(int position) {
-        hidden[position] = true;
-        notifyDataSetChanged();
-    }
-    public void unHide(int position) {
-        hidden[position] = false;
-        notifyDataSetChanged();
-    }
-
-    @Override
-    public View getView(int index, View convertView, ViewGroup parent) {
-        int position = getRealPosition(index);
+    public View getView(int position, View convertView, ViewGroup parent) {
         // Get the data item for this position
         AppInfo appInfo = getItem(position);
         // Check if an existing view is being reused, otherwise inflate the view
