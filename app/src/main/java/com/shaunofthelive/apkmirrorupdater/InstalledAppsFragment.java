@@ -12,14 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-
-import com.shaunofthelive.apkmirrorupdater.dummy.DummyContent;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -107,11 +102,6 @@ public class InstalledAppsFragment extends Fragment implements AbsListView.OnIte
         }
 
         ArrayList<AppInfo> apps = getAllAppInfo();
-//        for (AppInfo appInfo: apps) {
-//            // log the info
-//            Log.d("INST", "Application name: " + appInfo.getApplicationName());
-//            Log.d("INST", "Version: " + appInfo.getVersionName());
-//        }
 
         new FetchAndParse().execute();
 
@@ -120,11 +110,9 @@ public class InstalledAppsFragment extends Fragment implements AbsListView.OnIte
         mAdapter = new AppInfoAdapter(getActivity(), apps);
         // Filter out system apps that haven't been updated
         ((AppInfoAdapter) mAdapter).getFilter().filter("noSystemNotUpdated");
-        // Attach the adapter to a ListView
-//        ListView listView = (ListView) getActivity().findViewById(R.id.lvApps);
-//        listView.setAdapter(mAdapter);
+
+        //debug log
         for (AppInfo appInfo: apps) {
-            // log the info
             Log.d("INST", "Application name: " + appInfo.getApplicationName());
             Log.d("INST", "Version: " + appInfo.getVersionName());
         }
@@ -169,7 +157,7 @@ public class InstalledAppsFragment extends Fragment implements AbsListView.OnIte
         if (null != mListener) {
             // Notify the active callbacks interface (the activity, if the
             // fragment is attached to one) that an item has been selected.
-            //mListener.onFragmentInteraction(DummyContent.ITEMS.get(position).id);
+            //mListener.onFragmentInteraction(...);
             AppInfo app = (AppInfo)mAdapter.getItem(position);
             Toast.makeText(getActivity(), "Version code of "
                                         + app.getApplicationName() + ": "
