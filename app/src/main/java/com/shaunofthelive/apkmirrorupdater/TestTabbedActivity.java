@@ -53,7 +53,7 @@ public class TestTabbedActivity extends ActionBarActivity
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
         mSlidingTabLayout = (SlidingTabLayout) findViewById(R.id.sliding_tabs);
-        mSlidingTabLayout.setDistributeEvenly(true);
+        //mSlidingTabLayout.setDistributeEvenly(true);
         mSlidingTabLayout.setViewPager(mViewPager);
     }
 
