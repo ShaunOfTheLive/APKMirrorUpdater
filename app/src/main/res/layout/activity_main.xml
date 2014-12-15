@@ -6,8 +6,9 @@
     android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity"
     android:orientation="vertical">
 
-    <ListView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/lvApps" />
+    <fragment android:name="com.shaunofthelive.apkmirrorupdater.InstalledAppsFragment"
+        android:id="@+id/fragment_installed_apps"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout="@layout/fragment_installed_apps_list" />
 </LinearLayout>

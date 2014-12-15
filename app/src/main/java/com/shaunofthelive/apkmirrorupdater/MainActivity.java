@@ -21,60 +21,17 @@ import java.util.Collections;
 import java.util.List;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends ActionBarActivity
+                          implements InstalledAppsFragment.OnFragmentInteractionListener {
     private static final String TAG = "MY_TAG";
-
-    private ArrayList<AppInfo> getAllAppInfo() {
-        final PackageManager pm = getPackageManager();
-        List<PackageInfo> packages = pm.getInstalledPackages(0);
-        ArrayList<AppInfo> apps = new ArrayList<AppInfo>();
-
-        for (PackageInfo packageInfo : packages) {
-            ApplicationInfo ai;
-            try {
-                ai = pm.getApplicationInfo(packageInfo.packageName, 0);
-            } catch (final PackageManager.NameNotFoundException e) {
-                ai = null;
-            }
-            final String applicationName = (String) (ai != null ? pm.getApplicationLabel(ai) : "(unknown)");
-
-            apps.add(new AppInfo(packageInfo, applicationName));
-
-            Collections.sort(apps, AppInfo.nameComparator);
-        }
-
-        return apps;
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ArrayList<AppInfo> apps = getAllAppInfo();
-//        for (AppInfo appInfo: apps) {
-//            // log the info
-//            Log.d("INST", "Application name: " + appInfo.getApplicationName());
-//            Log.d("INST", "Version: " + appInfo.getVersionName());
-//        }
 
-        new FetchAndParse().execute();
-
-        // Create the adapter to convert the array to views
-        // Because we're filtering right away, the apps array will get copied internally in the adapter
-        AppInfoAdapter adapter = new AppInfoAdapter(this, apps);
-        // Filter out system apps that haven't been updated
-        adapter.getFilter().filter("noSystemNotUpdated");
-        // Attach the adapter to a ListView
-        ListView listView = (ListView) findViewById(R.id.lvApps);
-        listView.setAdapter(adapter);
-        for (AppInfo appInfo: apps) {
-            // log the info
-            Log.d("INST", "Application name: " + appInfo.getApplicationName());
-            Log.d("INST", "Version: " + appInfo.getVersionName());
-        }
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -96,5 +53,10 @@ public class MainActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onFragmentInteraction(String id) {
+        //
     }
 }
