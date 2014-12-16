@@ -20,7 +20,8 @@ import android.widget.TextView;
 
 
 public class MainActivity extends ActionBarActivity
-        implements InstalledAppsFragment.OnFragmentInteractionListener {
+                          implements InstalledAppsFragment.OnFragmentInteractionListener,
+                                     RemoteAppsFragment.OnFragmentInteractionListener {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -99,7 +100,7 @@ public class MainActivity extends ActionBarActivity
                     return new InstalledAppsFragment();
                 case 1:
                     return new RemoteAppsFragment();
-                case 2:
+                default:
                     return PlaceholderFragment.newInstance(position + 1);
             }
         }
@@ -159,7 +160,12 @@ public class MainActivity extends ActionBarActivity
     }
 
     @Override
-    public void onFragmentInteraction(String id) {
+    public void onInstalledAppsFragmentInteraction(String id) {
+        //
+    }
+
+    @Override
+    public void onRemoteAppsFragmentInteraction(String id) {
         //
     }
 }
