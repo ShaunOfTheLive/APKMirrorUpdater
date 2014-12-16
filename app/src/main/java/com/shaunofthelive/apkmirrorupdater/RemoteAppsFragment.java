@@ -150,8 +150,20 @@ public class RemoteAppsFragment extends Fragment implements AbsListView.OnItemCl
             for (AppInfo appInfo : appList) {
                 Log.d("SITE", appInfo.toString());
             }
-
+            initView(appList);
         }
+    }
+
+    private void initView(ArrayList<AppInfo> appList) {
+        // Create the adapter to convert the array to views
+        mAdapter = new AppInfoAdapter(getActivity(), appList);
+
+        // Set the adapter
+        mListView = (AbsListView) getActivity().findViewById(android.R.id.list);
+        ((AdapterView<ListAdapter>) mListView).setAdapter(mAdapter);
+
+        // Set OnItemClickListener so we can be notified on item clicks
+        mListView.setOnItemClickListener(this);
     }
 
     @Override
