@@ -62,6 +62,8 @@ public class RemoteAppsFragment extends Fragment implements AbsListView.OnItemCl
      */
     private ListAdapter mAdapter;
 
+    private ArrayList<AppInfo> mAppList = null;
+
     // TODO: Rename and change types of parameters
     public static InstalledAppsFragment newInstance(String param1, String param2) {
         InstalledAppsFragment fragment = new InstalledAppsFragment();
@@ -150,7 +152,10 @@ public class RemoteAppsFragment extends Fragment implements AbsListView.OnItemCl
             for (AppInfo appInfo : appList) {
                 Log.d("SITE", appInfo.toString());
             }
-            initView(appList);
+            mAppList = appList;
+            if (getView() != null) {
+                initView(mAppList);
+            }
         }
     }
 
@@ -158,8 +163,11 @@ public class RemoteAppsFragment extends Fragment implements AbsListView.OnItemCl
         // Create the adapter to convert the array to views
         mAdapter = new AppInfoAdapter(getActivity(), appList);
 
+        Log.d("debug", "getView() is null? " + String.valueOf(getView() == null));
+        Log.d("debug", "getView().findViewById is null? " + String.valueOf(getView().findViewById(R.id.list_remote_apps) == null));
+
         // Set the adapter
-        mListView = (AbsListView) getActivity().findViewById(android.R.id.list);
+        mListView = (AbsListView) getView().findViewById(R.id.list_remote_apps);
         mListView.setAdapter(mAdapter);
 
         // Set OnItemClickListener so we can be notified on item clicks
@@ -193,15 +201,10 @@ public class RemoteAppsFragment extends Fragment implements AbsListView.OnItemCl
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_installed_apps, container, false);
-
-        // Set the adapter
-        mListView = (AbsListView) view.findViewById(android.R.id.list);
-        ((AdapterView<ListAdapter>) mListView).setAdapter(mAdapter);
-
-        // Set OnItemClickListener so we can be notified on item clicks
-        mListView.setOnItemClickListener(this);
-
+        View view = inflater.inflate(R.layout.fragment_remote_apps, container, false);
+        if (mAppList != null) {
+            initView(mAppList);
+        }
         return view;
     }
 
@@ -262,7 +265,7 @@ public class RemoteAppsFragment extends Fragment implements AbsListView.OnItemCl
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        public void onFragmentInteraction(String id);
+        public void onRemoteAppsFragmentInteraction(String id);
     }
 
 }
