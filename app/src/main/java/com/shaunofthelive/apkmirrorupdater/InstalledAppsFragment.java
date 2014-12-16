@@ -123,7 +123,7 @@ public class InstalledAppsFragment extends Fragment implements AbsListView.OnIte
         View view = inflater.inflate(R.layout.fragment_installed_apps, container, false);
 
         // Set the adapter
-        mListView = (AbsListView) view.findViewById(android.R.id.list);
+        mListView = (AbsListView) view.findViewById(R.id.list_installed_apps);
         mListView.setAdapter(mAdapter);
 
         // Set OnItemClickListener so we can be notified on item clicks
@@ -189,7 +189,7 @@ public class InstalledAppsFragment extends Fragment implements AbsListView.OnIte
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        public void onFragmentInteraction(String id);
+        public void onInstalledAppsFragmentInteraction(String id);
     }
 
 }
