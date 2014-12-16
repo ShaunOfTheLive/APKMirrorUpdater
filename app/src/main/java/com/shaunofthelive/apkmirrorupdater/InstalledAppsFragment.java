@@ -103,8 +103,6 @@ public class InstalledAppsFragment extends Fragment implements AbsListView.OnIte
 
         ArrayList<AppInfo> apps = getAllAppInfo();
 
-        new FetchAndParse().execute();
-
         // Create the adapter to convert the array to views
         // Because we're filtering right away, the apps array will get copied internally in the adapter
         mAdapter = new AppInfoAdapter(getActivity(), apps);
