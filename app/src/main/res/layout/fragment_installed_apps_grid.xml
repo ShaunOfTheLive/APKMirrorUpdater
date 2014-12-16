@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     tools:context="com.shaunofthelive.apkmirrorupdater.InstalledAppsFragment">
 
-    <GridView android:id="@android:id/list" android:layout_width="match_parent"
+    <GridView android:id="@+id/list_installed_apps" android:layout_width="match_parent"
         android:layout_height="match_parent" android:numColumns="2" />
 
     <TextView android:id="@android:id/empty" android:layout_width="match_parent"
