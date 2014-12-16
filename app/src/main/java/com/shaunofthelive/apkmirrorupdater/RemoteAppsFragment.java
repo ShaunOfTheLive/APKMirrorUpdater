@@ -1,9 +1,6 @@
 package com.shaunofthelive.apkmirrorupdater;
 
 import android.app.Activity;
-import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -24,8 +21,6 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -163,9 +158,6 @@ public class RemoteAppsFragment extends Fragment implements AbsListView.OnItemCl
         // Create the adapter to convert the array to views
         mAdapter = new AppInfoAdapter(getActivity(), appList);
 
-        Log.d("debug", "getView() is null? " + String.valueOf(getView() == null));
-        Log.d("debug", "getView().findViewById is null? " + String.valueOf(getView().findViewById(R.id.list_remote_apps) == null));
-
         // Set the adapter
         mListView = (AbsListView) getView().findViewById(R.id.list_remote_apps);
         mListView.setAdapter(mAdapter);
@@ -183,19 +175,7 @@ public class RemoteAppsFragment extends Fragment implements AbsListView.OnItemCl
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-        //ArrayList<AppInfo> apps = getAllAppInfo();
-
         new FetchAndParse().execute();
-
-        // Create the adapter to convert the array to views
-        //mAdapter = new AppInfoAdapter(getActivity(), apps);
-
-        //debug log
-//        for (AppInfo appInfo: apps) {
-//            Log.d("INST", "Application name: " + appInfo.getApplicationName());
-//            Log.d("INST", "Version: " + appInfo.getVersionName());
-//        }
-
     }
 
     @Override
