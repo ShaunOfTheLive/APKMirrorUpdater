@@ -97,7 +97,6 @@ public class RemoteAppsFragment extends Fragment implements AbsListView.OnItemCl
                 ArrayList<String> versionStrings = new ArrayList<String>();
 
                 for (Element el : versionElements) {
-                    //Log.d(TAG, "el: " + el);
                     versionStrings.add(el.text());
                 }
 
@@ -139,14 +138,11 @@ public class RemoteAppsFragment extends Fragment implements AbsListView.OnItemCl
 
         @Override
         protected void onPreExecute() {
-            Log.d("DEBUG", "preExecute");
+
         }
 
         @Override
         protected void onPostExecute(ArrayList<AppInfo> appList) {
-            for (AppInfo appInfo : appList) {
-                Log.d("SITE", appInfo.toString());
-            }
             mAppList = appList;
             if (getView() != null) {
                 initView(mAppList);

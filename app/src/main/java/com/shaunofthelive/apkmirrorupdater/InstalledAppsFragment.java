@@ -108,13 +108,6 @@ public class InstalledAppsFragment extends Fragment implements AbsListView.OnIte
         mAdapter = new AppInfoAdapter(getActivity(), apps);
         // Filter out system apps that haven't been updated
         ((AppInfoAdapter) mAdapter).getFilter().filter("noSystemNotUpdated");
-
-        //debug log
-        for (AppInfo appInfo: apps) {
-            Log.d("INST", "Application name: " + appInfo.getApplicationName());
-            Log.d("INST", "Version: " + appInfo.getVersionName());
-        }
-
     }
 
     @Override
