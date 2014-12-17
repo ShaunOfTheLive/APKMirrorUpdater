@@ -1,7 +1,10 @@
 package com.shaunofthelive.apkmirrorupdater;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 import android.support.v7.app.ActionBarActivity;
 import android.support.v4.app.Fragment;
@@ -40,11 +43,15 @@ public class MainActivity extends ActionBarActivity
 
     ArrayList<AppInfo> mInstalledAppList;
     ArrayList<AppInfo> mRemoteAppList;
+    ArrayList<AppInfo> mCommonAppList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mInstalledAppList = null;
+        mRemoteAppList = null;
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -174,10 +181,29 @@ public class MainActivity extends ActionBarActivity
     @Override
     public void onInstalledAppsDataInitialized(ArrayList<AppInfo> appList) {
         mInstalledAppList = appList;
+        if (mRemoteAppList != null) {
+            joinLists();
+        }
     }
 
     @Override
     public void onRemoteAppsDataInitialized(ArrayList<AppInfo> appList) {
         mRemoteAppList = appList;
+        if (mInstalledAppList != null) {
+            joinLists();
+        }
+    }
+
+    public void joinLists() {
+        mCommonAppList = (ArrayList<AppInfo>) union(mInstalledAppList, mRemoteAppList);
+    }
+
+    public <T> List<T> union(List<T> list1, List<T> list2) {
+        Set<T> set = new HashSet<T>();
+
+        set.addAll(list1);
+        set.addAll(list2);
+
+        return new ArrayList<T>(set);
     }
 }
