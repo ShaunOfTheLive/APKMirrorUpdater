@@ -1,5 +1,6 @@
 package com.shaunofthelive.apkmirrorupdater;
 
+import java.util.ArrayList;
 import java.util.Locale;
 
 import android.support.v7.app.ActionBarActivity;
@@ -17,7 +18,9 @@ import android.view.ViewGroup;
 
 public class MainActivity extends ActionBarActivity
                           implements InstalledAppsFragment.OnFragmentInteractionListener,
-                                     RemoteAppsFragment.OnFragmentInteractionListener {
+                                     RemoteAppsFragment.OnFragmentInteractionListener,
+                                     InstalledAppsFragment.OnFragmentDataInitialized,
+                                     RemoteAppsFragment.OnFragmentDataInitialized {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -34,6 +37,9 @@ public class MainActivity extends ActionBarActivity
      */
     ViewPager mViewPager;
     SlidingTabLayout mSlidingTabLayout;
+
+    ArrayList<AppInfo> mInstalledAppList;
+    ArrayList<AppInfo> mRemoteAppList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -163,5 +169,15 @@ public class MainActivity extends ActionBarActivity
     @Override
     public void onRemoteAppsFragmentInteraction(String id) {
         //
+    }
+
+    @Override
+    public void onInstalledAppsDataInitialized(ArrayList<AppInfo> appList) {
+        mInstalledAppList = appList;
+    }
+
+    @Override
+    public void onRemoteAppsDataInitialized(ArrayList<AppInfo> appList) {
+        mRemoteAppList = appList;
     }
 }

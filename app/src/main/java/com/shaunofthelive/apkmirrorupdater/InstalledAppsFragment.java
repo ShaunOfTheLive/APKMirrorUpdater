@@ -192,4 +192,9 @@ public class InstalledAppsFragment extends Fragment implements AbsListView.OnIte
         public void onInstalledAppsFragmentInteraction(String id);
     }
 
+    public interface OnFragmentDataInitialized {
+        // TODO: Update argument type and name
+        public void onInstalledAppsDataInitialized(ArrayList<AppInfo> appList);
+    }
+
 }

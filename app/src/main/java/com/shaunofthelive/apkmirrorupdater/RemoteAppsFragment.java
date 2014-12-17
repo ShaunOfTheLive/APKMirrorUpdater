@@ -248,4 +248,9 @@ public class RemoteAppsFragment extends Fragment implements AbsListView.OnItemCl
         public void onRemoteAppsFragmentInteraction(String id);
     }
 
+    public interface OnFragmentDataInitialized {
+        // TODO: Update argument type and name
+        public void onRemoteAppsDataInitialized(ArrayList<AppInfo> appList);
+    }
+
 }
