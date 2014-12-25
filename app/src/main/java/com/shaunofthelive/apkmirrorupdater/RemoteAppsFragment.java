@@ -45,6 +45,7 @@ public class RemoteAppsFragment extends Fragment implements AbsListView.OnItemCl
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+    private OnFragmentDataInitialized mDataCallback;
 
     /**
      * The fragment's ListView/GridView.
@@ -144,6 +145,9 @@ public class RemoteAppsFragment extends Fragment implements AbsListView.OnItemCl
         @Override
         protected void onPostExecute(ArrayList<AppInfo> appList) {
             mAppList = appList;
+
+            mDataCallback.onRemoteAppsDataInitialized(appList);
+
             if (getView() != null) {
                 initView(mAppList);
             }
@@ -192,6 +196,12 @@ public class RemoteAppsFragment extends Fragment implements AbsListView.OnItemCl
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement OnFragmentInteractionListener");
+        }
+        try {
+            mDataCallback = (OnFragmentDataInitialized) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString()
+                    + " must implement OnFragmentDataInitialized");
         }
     }
 

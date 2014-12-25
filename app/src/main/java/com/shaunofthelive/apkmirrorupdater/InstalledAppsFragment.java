@@ -41,6 +41,7 @@ public class InstalledAppsFragment extends Fragment implements AbsListView.OnIte
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+    private OnFragmentDataInitialized mDataCallback;
 
     /**
      * The fragment's ListView/GridView.
@@ -103,6 +104,8 @@ public class InstalledAppsFragment extends Fragment implements AbsListView.OnIte
 
         ArrayList<AppInfo> apps = getAllAppInfo();
 
+        mDataCallback.onInstalledAppsDataInitialized(apps);
+
         // Create the adapter to convert the array to views
         // Because we're filtering right away, the apps array will get copied internally in the adapter
         mAdapter = new AppInfoAdapter(getActivity(), apps);
@@ -133,6 +136,12 @@ public class InstalledAppsFragment extends Fragment implements AbsListView.OnIte
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement OnFragmentInteractionListener");
+        }
+        try {
+            mDataCallback = (OnFragmentDataInitialized) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString()
+                    + " must implement OnFragmentDataInitialized");
         }
     }
 
