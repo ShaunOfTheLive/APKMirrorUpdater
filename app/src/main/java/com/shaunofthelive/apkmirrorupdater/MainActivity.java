@@ -12,6 +12,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -195,15 +196,22 @@ public class MainActivity extends ActionBarActivity
     }
 
     public void joinLists() {
-        mCommonAppList = (ArrayList<AppInfo>) union(mInstalledAppList, mRemoteAppList);
+        mCommonAppList = (ArrayList<AppInfo>) intersection(mInstalledAppList, mRemoteAppList);
+
+        for (AppInfo app : mCommonAppList) {
+            Log.d("COMMON", app.getApplicationName());
+        }
     }
+//TODO: how do we determine equality of app objects? none are equal right now
+    public <T> List<T> intersection(List<T> list1, List<T> list2) {
+        List<T> list = new ArrayList<T>();
 
-    public <T> List<T> union(List<T> list1, List<T> list2) {
-        Set<T> set = new HashSet<T>();
+        for (T t : list1) {
+            if(list2.contains(t)) {
+                list.add(t);
+            }
+        }
 
-        set.addAll(list1);
-        set.addAll(list2);
-
-        return new ArrayList<T>(set);
+        return list;
     }
 }
