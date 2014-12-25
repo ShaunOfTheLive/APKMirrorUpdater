@@ -95,4 +95,31 @@ public class AppInfo {
         return (((packageInfo.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0)
                 && (packageInfo.applicationInfo.flags & ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) == 0);
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof AppInfo))
+            return false;
+        if (obj == this)
+            return true;
+
+        AppInfo rhs = (AppInfo)obj;
+
+        // naive equals check. just comparing applicationName for now.
+        // TODO: improve this check using packageName
+        if (rhs.getApplicationName().equals(this.getApplicationName())) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    // Equal objects must produce the same hash code as long as they are equal
+    public int hashCode() {
+        int result = 0;
+        result = 31*result + getApplicationName().hashCode();
+
+        return result;
+    }
 }
