@@ -21,10 +21,12 @@ import android.view.ViewGroup;
 
 
 public class MainActivity extends ActionBarActivity
-                          implements InstalledAppsFragment.OnFragmentInteractionListener,
-                                     RemoteAppsFragment.OnFragmentInteractionListener,
-                                     InstalledAppsFragment.OnFragmentDataInitialized,
-                                     RemoteAppsFragment.OnFragmentDataInitialized {
+                          implements InstalledAppsFragment.OnFragmentInteractionListener
+                                    ,InstalledAppsFragment.OnFragmentDataInitialized
+                                    ,RemoteAppsFragment.OnFragmentInteractionListener
+                                    ,RemoteAppsFragment.OnFragmentDataInitialized
+                                    ,CommonAppsFragment.OnFragmentInteractionListener
+{
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -111,7 +113,7 @@ public class MainActivity extends ActionBarActivity
                 case 1:
                     return new RemoteAppsFragment();
                 default:
-                    return PlaceholderFragment.newInstance(position + 1);
+                    return new CommonAppsFragment();
             }
         }
 
@@ -200,6 +202,15 @@ public class MainActivity extends ActionBarActivity
 
         for (AppInfo app : mCommonAppList) {
             Log.d("COMMON", app.getApplicationName());
+        }
+
+        CommonAppsFragment commonAppsFrag = (CommonAppsFragment)
+                getSupportFragmentManager().findFragmentById(R.id.fragment_common_apps);
+
+        if (commonAppsFrag != null) {
+            commonAppsFrag.onInit(mCommonAppList);
+        } else {
+            Log.d("COMMON", "commonAppsFrag == NULL");
         }
     }
 //TODO: how do we determine equality of app objects? none are equal right now

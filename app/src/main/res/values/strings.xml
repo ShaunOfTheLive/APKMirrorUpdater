@@ -7,6 +7,6 @@
     <string name="title_activity_test_tabbed">TestTabbedActivity</string>
     <string name="title_section1">Installed Apps</string>
     <string name="title_section2">APKMirror Apps</string>
-    <string name="title_section3">Section 3</string>
+    <string name="title_section3">Common Apps</string>
 
 </resources>

@@ -10,5 +10,7 @@
     -->
     <item name="fragment_installed_apps" type="layout">@layout/fragment_installed_apps_list</item>
     <item name="fragment_remote_apps" type="layout">@layout/fragment_remote_apps_list</item>
+    <item name="fragment_common_apps" type="layout">@layout/fragment_common_apps_list</item>
+    <item name="fragment_common_apps" type="id"/>
 
 </resources>
